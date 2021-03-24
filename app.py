@@ -105,7 +105,6 @@ def add_team():
     city = post_data.get('city')
     state = post_data.get('state')
     sport = post_data.get('sport')
-    # teams = post_data.get('teams')
     new_team = Team(name=name, city=city, state=state, sport=sport)
     db.session.add(new_team)
     db.session.commit()
@@ -115,6 +114,25 @@ def add_team():
 def get_teams():
     all_teams = Team.query.all()
     return jsonify(teams_schema.dump(all_teams))
+
+@app.route('/api/player-join-team/<player_id>/<team_id>')
+def join_team(player_id, team_id):
+    player = Player.query.get(player_id)
+    team = Team.query.get(team_id)
+    player.teams.append(team)
+    team.players.append(player)
+    db.session.commit()
+    return jsonify(player_schema.dump(player.teams[0]))
+
+@app.route('/api/get-players-team/<id>')
+def get_players_team(id):
+    team = Team.query.get(id)
+    return jsonify(team_schema.dump(team.players[0]))
+
+@app.route('/api/get-teams-player/<id>')
+def get_teams_player(id):
+    player = Player.query.get(id)
+    return jsonify(player_schema.dump(player.teams[1]))
 
 if __name__ == '__main__':
     app.run(debug=True)
