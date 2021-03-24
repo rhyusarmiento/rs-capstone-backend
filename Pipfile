@@ -11,6 +11,8 @@ flask-sqlalchemy = "*"
 flask-marshmallow = "*"
 marshmallow-sqlalchemy = "*"
 sqlalchemy = "<1.4.0"
+flask-cors = "*"
+flask-bcrypt = "*"
 
 [requires]
 python_version = "3.7"
