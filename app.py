@@ -93,53 +93,53 @@ teams_schema = TeamSchema(many=True)
 # matchup_schema = MatchupSchema()
 # matchups_schema = MatchupSchema(many=True)
 
-# @app.route('/api/register', methods=['POST'])
-# def register():
-#     post_data = request.get_json()
-#     username = post_data.get('username')
-#     password = post_data.get('password')
-#     db_player = Player.query.filter_by(username=username).first()
-#     if db_player:
-#         return 'username taken', 404
-#     hashed_password = flask_bcrypt.generate_password_hash(password).decode('utf-8')
-#     new_player = Player(username=username, password=hashed_password)
-#     db.session.add(new_player)
-#     db.session.commit()
-#     session.permanent = True
-#     session['username'] = username
-#     print(session)
-#     return jsonify(player_schema.dump(new_player))
+@app.route('/api/register', methods=['POST'])
+def register():
+    post_data = request.get_json()
+    username = post_data.get('username')
+    password = post_data.get('password')
+    db_player = Player.query.filter_by(username=username).first()
+    if db_player:
+        return 'username taken', 404
+    hashed_password = flask_bcrypt.generate_password_hash(password).decode('utf-8')
+    new_player = Player(username=username, password=hashed_password)
+    db.session.add(new_player)
+    db.session.commit()
+    session.permanent = True
+    session['username'] = username
+    print(session)
+    return jsonify(player_schema.dump(new_player))
 
-# @app.route('/api/v1/login', methods=['POST'])
-# def login():
-#     post_data = request.get_json()
-#     db_player = Player.query.filter_by(username=post_data.get('username')).first()
-#     if db_player is None:
-#         return 'username not found', 404
-#     password = post_data.get('password')
-#     db_player_hashed_password = db_player.password
-#     valid_password = flask_bcrypt.check_password_hash(db_player_hashed_password, password)
-#     if valid_password:
-#         session.permanent = True
-#         session['username'] = post_data.get('username')
-#         return jsonify('user verified')
-#     return 'password invalid', 401
+@app.route('/api/v1/login', methods=['POST'])
+def login():
+    post_data = request.get_json()
+    db_player = Player.query.filter_by(username=post_data.get('username')).first()
+    if db_player is None:
+        return 'username not found', 404
+    password = post_data.get('password')
+    db_player_hashed_password = db_player.password
+    valid_password = flask_bcrypt.check_password_hash(db_player_hashed_password, password)
+    if valid_password:
+        session.permanent = True
+        session['username'] = post_data.get('username')
+        return jsonify('user verified')
+    return 'password invalid', 401
 
-# @app.route('/api/v1/logged-in', methods=['GET'])
-# def logged_in():
-#     if 'username' in session:
-#         db_player = Player.query.filter_by(username=session['username']).first()
-#         if db_player:
-#             return jsonify('User Logged Via Cookie')
-#         else:
-#             return jsonify('session exists, but user does not exist ... anymore')
-#     else:
-#         return jsonify('nope!')
+@app.route('/api/v1/logged-in', methods=['GET'])
+def logged_in():
+    if 'username' in session:
+        db_player = Player.query.filter_by(username=session['username']).first()
+        if db_player:
+            return jsonify('User Logged Via Cookie')
+        else:
+            return jsonify('session exists, but user does not exist ... anymore')
+    else:
+        return jsonify('nope!')
 
-# @app.route('/api/v1/logout', methods=['POST'])
-# def logout():
-#     session.clear()
-#     return jsonify('Logged out')
+@app.route('/api/v1/logout', methods=['POST'])
+def logout():
+    session.clear()
+    return jsonify('Logged out')
 
 # Player CRUD
 @app.route('/api/add-player', methods=['POST'])
