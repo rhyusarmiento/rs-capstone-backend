@@ -75,6 +75,7 @@ class Team(db.Model):
 class PlayerSchema(ma.Schema):
     class Meta:
         fields = ('id', 'username', 'password', 'name', 'city', 'state', 'phone_number')
+    # nested schemas for showing the teams lists?
 
 player_schema = PlayerSchema()
 players_schema = PlayerSchema(many=True)
@@ -82,6 +83,8 @@ players_schema = PlayerSchema(many=True)
 class TeamSchema(ma.Schema):
     class Meta:
         fields = ('id', 'name', 'city', 'state', 'sport')
+    # nested schemas for showing the teams lists?
+
 
 team_schema = TeamSchema()
 teams_schema = TeamSchema(many=True)
