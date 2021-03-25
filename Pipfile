@@ -13,6 +13,7 @@ marshmallow-sqlalchemy = "*"
 sqlalchemy = "<1.4.0"
 flask-cors = "*"
 flask-bcrypt = "*"
+python-dotenv = "*"
 
 [requires]
 python_version = "3.7"
