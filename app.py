@@ -217,7 +217,7 @@ def delete_team(id):
     db.session.commit()
     return jsonify('done')
 
-# many 2 many
+# Many 2 Many
 @app.route('/api/player-join-team/<player_id>/<team_id>')
 def join_team(player_id, team_id):
     player = Player.query.get(player_id)
