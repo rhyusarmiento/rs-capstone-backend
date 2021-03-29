@@ -36,6 +36,7 @@ $ pipenv shell
 
 # api routes
 
+- auth
 > http://localhost:5000/api/register
 > http://localhost:5000/api/login
 > http://localhost:5000/api/logged-in
@@ -56,5 +57,6 @@ $ pipenv shell
 
 - Many 2 Many
 > http://localhost:5000/api/player-join-team/<player_id>/<team_id>
+> http://localhost:5000/api/player-leave-team/<player_id>/<team_id>
 > http://localhost:5000/api/get-players-team/<id>
 > http://localhost:5000/api/get-teams-player/<id>
