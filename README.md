@@ -33,3 +33,28 @@ $ pipenv shell
 >>> db.create_all()
 ```
 - This will then add an app.sqlite file to your local computer
+
+# api routes
+
+> http://localhost:5000/api/register
+> http://localhost:5000/api/login
+> http://localhost:5000/api/logged-in
+> http://localhost:5000/api/logout
+
+- player 
+> http://localhost:5000/api/get-players
+> http://localhost:5000/api/get-single-player/<id>
+> http://localhost:5000/api/edit-player/<id>
+> http://localhost:5000/api/delete-player/<id>
+
+- team
+> http://localhost:5000/api/add-team
+> http://localhost:5000/api/get-teams
+> http://localhost:5000/api/get-single-team/<id>
+> http://localhost:5000/api/edit-team/<id>
+> http://localhost:5000/api/delete-team/<id>
+
+- Many 2 Many
+> http://localhost:5000/api/player-join-team/<player_id>/<team_id>
+> http://localhost:5000/api/get-players-team/<id>
+> http://localhost:5000/api/get-teams-player/<id>

@@ -13,7 +13,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'ap
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # app.secret_key = 'secret'
 app.secret_key = os.environ.get('SECRET_KEY')
-app.permanent_session_lifetime = timedelta(minutes=1)
+app.permanent_session_lifetime = timedelta(minutes=20)
 CORS(app, supports_credentials=True)
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
@@ -129,7 +129,7 @@ def login():
     if valid_password:
         session.permanent = True
         session['username'] = post_data.get('username')
-        return jsonify('user verified')
+        return jsonify(db_player.id)
     return 'password invalid', 401
 
 @app.route('/api/logged-in', methods=['GET'])
@@ -137,11 +137,11 @@ def logged_in():
     if 'username' in session:
         db_player = Player.query.filter_by(username=session['username']).first()
         if db_player:
-            return jsonify('User Logged Via Cookie')
+            return jsonify('logged in via cookie')
         else:
-            return jsonify('session exists, but user does not exist ... anymore')
+            return jsonify('session exists, user deleted')
     else:
-        return jsonify('nope!')
+        return jsonify('not logged in')
 
 @app.route('/api/logout', methods=['POST'])
 def logout():
@@ -227,7 +227,15 @@ def join_team(player_id, team_id):
     team = Team.query.get(team_id)
     player.teams.append(team)
     db.session.commit()
-    return jsonify(teams_schema.dump(player.teams))
+    return jsonify('joined')
+
+@app.route('/api/player-leave-team/<player_id>/<team_id>')
+def leave_team(player_id, team_id):
+    player = Player.query.get(player_id)
+    team = Team.query.get(team_id)
+    player.teams.remove(team)
+    db.session.commit()
+    return jsonify('removed')
 
 @app.route('/api/get-players-team/<id>')
 def get_players_team(id):
