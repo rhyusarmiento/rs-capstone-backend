@@ -9,10 +9,9 @@ from datetime import timedelta
 app = Flask(__name__)
 
 basedir = os.path.abspath(os.path.dirname(__file__))
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'app.sqlite')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL') or 'sqlite:///' + os.path.join(basedir, 'app.sqlite')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-# app.secret_key = 'secret'
-app.secret_key = os.environ.get('SECRET_KEY')
+app.secret_key = os.environ.get('SECRET_KEY') or 'super_secret'
 app.permanent_session_lifetime = timedelta(minutes=20)
 CORS(app, supports_credentials=True)
 db = SQLAlchemy(app)
@@ -247,4 +246,4 @@ def get_teams_player(id):
     return jsonify(teams_schema.dump(player.teams))
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
