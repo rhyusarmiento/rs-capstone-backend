@@ -150,7 +150,6 @@ def logout():
 
 # Player CRUD
 # add_player was here merged with register
-
 @app.route('/api/get-players')
 def get_players():
     all_players = Player.query.all()
@@ -170,7 +169,7 @@ def edit_player(id):
     player.state = post_data.get('state')
     player.phone_number = post_data.get('phone_number')
     db.session.commit()
-    return jsonify(player_schema.dump(player))
+    return jsonify('edit')
 
 @app.route('/api/delete-player/<id>', methods=['DELETE'])
 def delete_player(id):
