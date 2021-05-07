@@ -36,6 +36,7 @@ $ pipenv shell
 - This will then add an app.sqlite file to your local computer
 
 # api routes
+> note use https://rs-capstone-backend.herokuapp.com for non local
 
 - auth
 > http://localhost:5000/api/register
