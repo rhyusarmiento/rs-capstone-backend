@@ -245,5 +245,9 @@ def get_teams_player(id):
     player = Player.query.get(id)
     return jsonify(teams_schema.dump(player.teams))
 
+@app.route('/')
+def hello():
+    return "hey app"
+
 if __name__ == '__main__':
     app.run()
