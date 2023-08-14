@@ -104,9 +104,9 @@ def register():
     city = post_data.get('city')
     state = post_data.get('state')
     phone_number = post_data.get('phone_number')
-    db_player = Player.query.filter_by(username=username).first()
-    if db_player:
-        return 'username taken', 404
+    #db_player = Player.query.filter_by(username=username).first()
+    #if db_player:
+      #  return 'username taken', 404
     # hashed_password = flask_bcrypt.generate_password_hash(password).decode('utf-8')
     new_player = Player(username=username, password=password, name=name, city=city, state=state, phone_number=phone_number)
     db.session.add(new_player)
