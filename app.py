@@ -107,13 +107,13 @@ def register():
     db_player = Player.query.filter_by(username=username).first()
     if db_player:
         return 'username taken', 404
-    hashed_password = flask_bcrypt.generate_password_hash(password).decode('utf-8')
-    new_player = Player(username=username, password=hashed_password, name=name, city=city, state=state, phone_number=phone_number)
+    # hashed_password = flask_bcrypt.generate_password_hash(password).decode('utf-8')
+    new_player = Player(username=username, password=password, name=name, city=city, state=state, phone_number=phone_number)
     db.session.add(new_player)
     db.session.commit()
-    session.permanent = True
-    session['username'] = username
-    print(session)
+    # session.permanent = True
+    # session['username'] = username
+    # print(session)
     return jsonify(player_schema.dump(new_player))
 
 @app.route('/api/login', methods=['POST'])
