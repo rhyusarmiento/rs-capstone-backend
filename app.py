@@ -111,10 +111,11 @@ def register():
     new_player = Player(username=username, password=password, name=name, city=city, state=state, phone_number=phone_number)
     db.session.add(new_player)
     db.session.commit()
+    player = Player.query.get(new_player.id)
     # session.permanent = True
     # session['username'] = username
     # print(session)
-    return jsonify(player_schema.dump(new_player))
+    return player_schema.jsonify(player)
 
 @app.route('/api/login', methods=['POST'])
 def login():
